@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/kasvith/typescript-express-jwt-mongo-boilerplate.git"
   },
-  "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "nodemon",
     "dev:docker": "nodemon -L",
