@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const Joi = require('joi')
+const Joi = require('joi');
 
 // User validation rules
 module.exports = {
@@ -11,4 +11,4 @@ module.exports = {
       name: Joi.string().max(128).required()
     }
   }
-}
+};
