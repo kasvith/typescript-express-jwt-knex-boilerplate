@@ -1,10 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config(); // load .env file
-
 import { Config } from './Config';
+import { getEnv } from '../utils/Env';
+import dotenv from 'dotenv';
 
 const config: Config = {
-  port: (process.env.PORT && Number(process.env.PORT)) || 3000,
+  port: Number(getEnv('PORT') || 3000),
   name: process.env.NAME || 'My App',
   env: process.env.NODE_ENV || 'development',
   secret: process.env.APP_SECRET || 'somesecret',

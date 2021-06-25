@@ -41,7 +41,7 @@ app.use(errorHandler.handleNotFound);
 app.use(errorHandler.handleError);
 
 exports.start = () => {
-  app.listen(config.port, (err) => {
+  app.listen(config.port, (err: any) => {
     if (err) {
       log.error(`Error starting the app`, { error: err });
       process.exit(-1);

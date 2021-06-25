@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import errorCodes from './errorCodes';
+import ErrorCodes from './errorCodes';
 
 export interface IApiError {
   message: string;
@@ -16,7 +16,7 @@ export class ApiError extends Error {
   constructor(
     message: string,
     status = httpStatus.INTERNAL_SERVER_ERROR,
-    errorCode = errorCodes.UnknownError,
+    errorCode = ErrorCodes.ValidationError,
     errors?: unknown
   ) {
     super(message);
