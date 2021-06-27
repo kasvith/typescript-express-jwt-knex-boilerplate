@@ -1,8 +1,11 @@
 import { Config } from './Config';
-import { getEnv } from '../utils/Environment';
+import { getEnv, getEnvWithDefault, EnvType } from '../utils/Environment';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const config: Config = {
-  port: Number(getEnv('PORT') || 3000),
+  port: getEnv('PORT', EnvType.number) as number,
   name: process.env.NAME || 'My App',
   env: process.env.NODE_ENV || 'development',
   secret: process.env.APP_SECRET || 'somesecret',
