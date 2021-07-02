@@ -3,8 +3,8 @@ export interface ILogger {
   info(message: string): void;
   info(message: string, ...meta: any[]): void;
 
-  error(message: string): void;
   error(message: string, ...meta: any[]): void;
+  error(message: string, type: string, error: Error, ...meta: any[]): void;
 
   debug(message: string): void;
   debug(message: string, ...meta: any[]): void;
