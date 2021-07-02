@@ -1,4 +1,4 @@
-export interface Config {
+export interface IConfig {
   port: number;
   name?: string;
   env: string;

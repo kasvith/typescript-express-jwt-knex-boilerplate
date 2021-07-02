@@ -1,22 +1,25 @@
 import { IProvider } from './interfaces/Provider';
-import express, { Application } from 'express';
-import { Config } from '../config/Config';
+import express, { Application as ExpressApplication } from 'express';
+import { IConfig } from '../config/Config';
+import { Logger, LogLevel } from './WinstonLogger';
 
 class App {
   providers: IProvider[] = [];
-  app: Application;
-  config: Config;
+  app: ExpressApplication;
+  config: IConfig;
+  logger: Logger;
 
-  constructor(config: Config) {
+  constructor(config: IConfig) {
     this.config = config;
     this.app = express();
+    this.logger = new Logger(LogLevel.Info);
   }
 
-  register(provider: IProvider): void {
+  registerProvider(provider: IProvider): void {
     this.providers.push(provider);
   }
 
-  initializeDefaultMiddlewares(): void {
+  setupMiddlewares(): void {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
   }
@@ -31,10 +34,10 @@ class App {
     try {
       this.initializeProviders();
 
-      this.initializeDefaultMiddlewares();
+      this.setupMiddlewares();
 
       this.app.listen(this.config.port, async () => {
-        console.log('working');
+        this.logger.error('working');
       });
     } catch (error) {
       console.error(error);
