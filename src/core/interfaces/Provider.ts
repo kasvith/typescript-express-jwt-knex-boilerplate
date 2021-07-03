@@ -1,3 +1,3 @@
 export interface IProvider {
-  initialize(): void;
+  setup(): void;
 }

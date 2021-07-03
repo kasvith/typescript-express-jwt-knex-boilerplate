@@ -1,4 +1,4 @@
-import { EnvironmentError } from '../errors/EnvironmentError';
+import { EnvironmentError } from '../../errors/EnvironmentError';
 
 export function getRequiredEnv(name: string): string {
   const value = process.env[name];
