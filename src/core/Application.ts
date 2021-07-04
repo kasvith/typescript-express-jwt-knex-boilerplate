@@ -1,8 +1,8 @@
 import { IProvider } from './interfaces/Provider';
 import express, { Application as ExpressApplication } from 'express';
 import { IAppConfig } from './interfaces/AppConfig';
-import { Logger, LogLevel } from './WinstonLogger';
-import { ILogger } from './interfaces/Logger';
+import { WinstonLogger } from './WinstonLogger';
+import { ILogger } from './logging/Logger';
 
 class App {
   providers: IProvider[] = [];
@@ -13,7 +13,7 @@ class App {
   constructor(config: IAppConfig) {
     this.config = config;
     this.app = express();
-    this.logger = new Logger(LogLevel.Info);
+    this.logger = new WinstonLogger({});
   }
 
   registerProvider(provider: IProvider): void {
@@ -38,6 +38,9 @@ class App {
 
       this.app.listen(this.config.port, async () => {
         this.logger.info('working');
+
+        this.logger.error('fdgf');
+        this.logger.error('s', new Error('asd'), { abc: 1 });
       });
     } catch (error) {
       console.error(error);

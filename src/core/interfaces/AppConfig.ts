@@ -1,3 +1,8 @@
+export interface ILogConfig {
+  level: string;
+  color: boolean;
+}
+
 export interface IAppConfig {
   port: number;
   name?: string;
@@ -8,4 +13,7 @@ export interface IAppConfig {
   isDevEnv: boolean;
   isTestEnv: boolean;
   isProdEnv: boolean;
+  isEnv(env: string): boolean;
+
+  logging: ILogConfig;
 }
