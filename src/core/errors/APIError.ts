@@ -1,11 +1,11 @@
 import httpStatus from 'http-status';
 
-export interface IApiError {
+type IApiError = {
   message: string;
   status?: number;
   errorCode?: number;
   errors?: unknown;
-}
+};
 
 export class ApiError extends Error {
   status: number;

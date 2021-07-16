@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 export interface ILogger {
   info(message: string): void;
   info(message: string, meta?: any): void;
