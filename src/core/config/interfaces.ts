@@ -1,19 +1,18 @@
 export interface ILogConfig {
-  level: string;
-  color: boolean;
+  level?: string;
+  colored?: boolean;
 }
 
 export interface IAppConfig {
   port: number;
-  name?: string;
+  app?: string;
   env: string;
-  secret: string;
-  hostname: string;
+  secret?: string;
+  hostname?: string;
 
   isDevEnv: boolean;
   isTestEnv: boolean;
   isProdEnv: boolean;
-  isEnv(env: string): boolean;
 
-  logging: ILogConfig;
+  logging?: ILogConfig;
 }

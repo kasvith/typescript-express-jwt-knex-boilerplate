@@ -3,7 +3,7 @@ import express, {
   Application as ExpressApplication,
   RequestHandler
 } from 'express';
-import { IAppConfig } from './config/IAppConfig';
+import { IAppConfig } from './config';
 import { WinstonLogFormat, WinstonLogger } from './WinstonLogger';
 import { ILogger } from './logging/Logger';
 import container from './di/container';

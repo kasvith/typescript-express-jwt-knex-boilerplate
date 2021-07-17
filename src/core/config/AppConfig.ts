@@ -1,20 +1,19 @@
-import { IAppConfig, ILogConfig } from './interfaces';
-import { getEnv } from '../utils/Environment';
-class AppConfig implements IAppConfig {
-  port: number;
-  name?: string | undefined;
-  env: string;
-  secret: string;
-  hostname: string;
-  isDevEnv: boolean;
-  isTestEnv: boolean;
-  isProdEnv: boolean;
-  isEnv(env: string): boolean {
-    throw new Error('Method not implemented.');
-  }
-  logging: ILogConfig;
+import dotenv from 'dotenv';
 
-  constructor() {
-    this.name = getEnv('NAME');
-  }
-}
+import { getEnv } from '../utils/Environment';
+import { IAppConfig } from './interfaces';
+dotenv.config();
+
+const env = getEnv('NODE_ENV') || 'production';
+
+const config: IAppConfig = {
+  env,
+  app: getEnv('APP'),
+  hostname: getEnv('HOSTNAME'),
+  isDevEnv: env === 'development',
+  isProdEnv: env === 'production',
+  isTestEnv: env === 'test',
+  port: parseInt(getEnv('PORT') || '5000')
+};
+
+export default config;
