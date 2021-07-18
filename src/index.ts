@@ -1,10 +1,9 @@
 import 'reflect-metadata';
 
 import Application from './core/Application';
-import config from './core/config/AppConfig';
+import config from './config/AppConfig';
+const app = new Application();
 
-console.log(config);
+app.start(config.port);
 
-const app = new Application(config);
-
-app.start();
+export default app;

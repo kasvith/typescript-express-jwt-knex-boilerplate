@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 
-import { getEnv } from '../utils/Environment';
+import { getEnv } from '../core/utils/Environment';
 import { IAppConfig } from './interfaces';
 dotenv.config();
 
