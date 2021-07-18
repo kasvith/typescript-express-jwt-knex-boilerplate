@@ -1,4 +1,5 @@
 import { HttpRequestMethod, RouteConfig } from './RouteConfig';
+import { ROUTER_ROUTES } from '../constants/meta';
 
 export function makeHttpVerb(requestMethod: HttpRequestMethod) {
   return (path: string): MethodDecorator => {
@@ -8,19 +9,19 @@ export function makeHttpVerb(requestMethod: HttpRequestMethod) {
       propertyKey: string | symbol,
       _descriptor: TypedPropertyDescriptor<T>
     ): void => {
-      if (!Reflect.hasMetadata('routes', target.constructor)) {
+      if (!Reflect.hasMetadata(ROUTER_ROUTES, target.constructor)) {
         Reflect.defineMetadata(
-          'routes',
+          ROUTER_ROUTES,
           new Map<string, RouteConfig>(),
           target.constructor
         );
       }
 
       // Get the routes stored so far, extend it by the new route and re-set the metadata.
-      const routes = Reflect.getMetadata('routes', target.constructor) as Map<
-        string,
-        RouteConfig
-      >;
+      const routes = Reflect.getMetadata(
+        ROUTER_ROUTES,
+        target.constructor
+      ) as Map<string, RouteConfig>;
 
       const methodName = propertyKey.toString();
       const route = routes.get(methodName);
@@ -37,7 +38,7 @@ export function makeHttpVerb(requestMethod: HttpRequestMethod) {
           methodName
         });
       }
-      Reflect.defineMetadata('routes', routes, target.constructor);
+      Reflect.defineMetadata(ROUTER_ROUTES, routes, target.constructor);
     };
   };
 }

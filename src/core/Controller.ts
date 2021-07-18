@@ -1,35 +1,54 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import { RouteConfig } from './decorators/express/common/RouteConfig';
-import urljoin from 'url-join';
+import { NextFunction, Request, Response, Router } from 'express';
 import { ServerResponse } from 'http';
+import urljoin from 'url-join';
+import { RouteConfig } from './decorators/express/common/RouteConfig';
+import {
+  ROUTER_API_VERSION,
+  ROUTER_PREFIX,
+  ROUTER_ROUTES,
+  ROUTER_SCOPE
+} from './decorators/express/constants/meta';
 
 export function configureControllers(router: Router, controllers: any[]): void {
   controllers.forEach((controller) => {
     // This is our instantiated class
     const instance = new controller();
     // The prefix saved to our controller
-    const scope = Reflect.getMetadata('router:scope', controller);
-    const prefix = Reflect.getMetadata('router:prefix', controller);
+    const scope = Reflect.getMetadata(ROUTER_SCOPE, controller);
+    const prefix = Reflect.getMetadata(ROUTER_PREFIX, controller);
 
-    const apiVersion = Reflect.getMetadata('router:apiVersion', controller);
-    console.log(apiVersion);
+    const apiVersions = Reflect.getMetadata(
+      ROUTER_API_VERSION,
+      controller
+    ) as Array<string>;
+
     // Our `routes` array containing all our routes for this controller
     const routes: Map<string, RouteConfig> = Reflect.getMetadata(
-      'routes',
+      ROUTER_ROUTES,
       controller
     );
 
     // Iterate over all routes and register them to our express application
     routes.forEach((route) => {
-      if (route.requestMethod && route.path) {
-        const pathParams = apiVersion
-          ? [apiVersion, prefix, route.path]
-          : [prefix, route.path];
+      if (route.path) {
+        let paths = [];
+        const basePath = urljoin(prefix, route.path);
 
-        const scopedParams = scope ? [scope, ...pathParams] : pathParams;
-        const path = urljoin('/', ...scopedParams);
+        if (apiVersions) {
+          apiVersions.forEach((version) =>
+            paths.push(urljoin(version, basePath))
+          );
+        } else {
+          paths.push(basePath);
+        }
 
-        const params = [];
+        if (scope) {
+          paths = paths.map((path) => urljoin(scope, path));
+        }
+
+        paths = paths.map((path) => urljoin('/', path)).reverse();
+
+        const params: any[] = [];
 
         if (route.middlewares) {
           // remember decoraters returns result bottom to top
@@ -68,13 +87,17 @@ export function configureControllers(router: Router, controllers: any[]): void {
             next(error);
           }
         };
-
         params.push(executor);
-        router[route.requestMethod](path, ...params);
 
-        console.log(
-          `config:route ${route.requestMethod?.toUpperCase()} ${path}`
-        );
+        paths.forEach((path) => {
+          if (route.requestMethod) {
+            router[route.requestMethod](path, ...params);
+
+            console.log(
+              `config:route ${route.requestMethod.toUpperCase()} ${path}`
+            );
+          }
+        });
       }
     });
   });

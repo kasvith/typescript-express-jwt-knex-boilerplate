@@ -1,10 +1,5 @@
 import { Request, Response } from 'express';
-import {
-  ApiController,
-  Get,
-  ApiVersion,
-  Controller
-} from './decorators/express';
+import { ApiController, Get, ApiVersion } from './decorators/express';
 
 interface MessageResponse {
   message: string;
@@ -16,7 +11,7 @@ interface User {
 
 @ApiController('/users')
 @ApiVersion('1.0')
-@ApiVersion('1.1')
+@ApiVersion('2.0')
 export class UserController {
   @Get('/all')
   async getAll(_req: Request, res: Response): Promise<MessageResponse> {
