@@ -8,8 +8,6 @@ export function makeHttpVerb(requestMethod: HttpRequestMethod) {
       propertyKey: string | symbol,
       _descriptor: TypedPropertyDescriptor<T>
     ): void => {
-      // In case this is the first route to be registered the `routes` metadata is likely to be undefined at this point.
-      // To prevent any further validation simply set it to an empty array here.
       if (!Reflect.hasMetadata('routes', target.constructor)) {
         Reflect.defineMetadata(
           'routes',
