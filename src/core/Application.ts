@@ -1,14 +1,12 @@
-import { IProvider } from './interfaces/Provider';
 import express, {
   Application as ExpressApplication,
   RequestHandler
 } from 'express';
-
-import { WinstonLogFormat, WinstonLogger } from './WinstonLogger';
-import { ILogger } from './logging/Logger';
-
-import { UserController } from './UserController';
 import { configureControllers } from './Controller';
+import { IProvider } from './interfaces/Provider';
+import { ILogger } from './logging/Logger';
+import { UserController } from './UserController';
+import { WinstonLogFormat, WinstonLogger } from './WinstonLogger';
 
 class Application {
   providers: IProvider[] = [];

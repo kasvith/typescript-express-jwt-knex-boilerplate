@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ApiController, Get, ApiVersion } from './decorators/express';
+import { ApiController, ApiVersion, Get } from './decorators/express';
 
 interface MessageResponse {
   message: string;
