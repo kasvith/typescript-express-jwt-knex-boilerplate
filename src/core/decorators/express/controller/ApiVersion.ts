@@ -9,7 +9,12 @@ export const ApiVersion = (version = ''): ClassDecorator => {
     if (prevApiVersions) {
       newApiVersions.push(...prevApiVersions);
     }
-    newApiVersions.push(version);
+
+    // dont push same api version twice
+    if (!newApiVersions.includes(version)) {
+      newApiVersions.push(version);
+    }
+
     Reflect.defineMetadata(ROUTER_API_VERSION, newApiVersions, target);
 
     if (!Reflect.hasMetadata(ROUTER_ROUTES, target)) {
