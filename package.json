@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "nodemon",
     "dev:docker": "nodemon -L",
-    "build": "rimraf ./build && tsc",
+    "build": "rimraf ./build && ttsc",
     "start": "node ./build/index.js",
     "lint": "eslint --ext .ts,.js . ",
     "lint:fix": "eslint --fix --ext .ts,.js .",
