@@ -35,8 +35,8 @@ class Application {
   }
 
   private setupProviders(): void {
-    for (let i = 0; i < this.providers.length; i++) {
-      this.providers[i].setup();
+    for (const provider of this.providers) {
+      provider.setup();
     }
   }
 

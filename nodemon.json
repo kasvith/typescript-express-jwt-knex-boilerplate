@@ -7,5 +7,5 @@
   "ignore": [
     "**.spec.ts"
   ],
-  "exec": "node --inspect=0.0.0.0 -r ts-node/register/transpile-only ./src/index.ts"
+  "exec": "node --inspect=0.0.0.0 -r tsconfig-paths/register -r ts-node/register/transpile-only ./src/index.ts"
 }

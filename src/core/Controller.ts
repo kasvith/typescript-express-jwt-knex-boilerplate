@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { ServerResponse } from 'http';
 import urljoin from 'url-join';
-import { RouteConfig } from './decorators/express/common/RouteConfig';
+import { RouteConfig } from '@decorators/express/common';
 import {
   ROUTER_API_VERSION,
   ROUTER_PREFIX,
   ROUTER_ROUTES,
   ROUTER_SCOPE
-} from './decorators/express/constants/meta';
+} from '@decorators/express/constants/meta';
 
 export function configureControllers(router: Router, controllers: any[]): void {
   controllers.forEach((controller) => {
@@ -31,7 +31,7 @@ export function configureControllers(router: Router, controllers: any[]): void {
     // Iterate over all routes and register them to our express application
     routes.forEach((route) => {
       if (route.path) {
-        let paths = [];
+        let paths: string[] = [];
         const basePath = urljoin(prefix, route.path);
 
         if (apiVersions) {
@@ -93,7 +93,7 @@ export function configureControllers(router: Router, controllers: any[]): void {
           if (route.requestMethod) {
             router[route.requestMethod](path, ...params);
 
-            console.log(
+            console.debug(
               `config:route ${route.requestMethod.toUpperCase()} ${path}`
             );
           }
