@@ -1,19 +1,18 @@
-import dotenv from 'dotenv';
+export interface ILogConfig {
+  level?: string;
+  colored?: boolean;
+}
 
-import { getEnv } from '../core/utils/Environment';
-import { IAppConfig } from './interfaces';
-dotenv.config();
+export interface IAppConfig {
+  port: number;
+  app?: string;
+  env: string;
+  secret?: string;
+  hostname?: string;
 
-const env = getEnv('NODE_ENV') || 'production';
+  isDevEnv: boolean;
+  isTestEnv: boolean;
+  isProdEnv: boolean;
 
-const config: IAppConfig = {
-  env,
-  app: getEnv('APP'),
-  hostname: getEnv('HOSTNAME'),
-  isDevEnv: env === 'development',
-  isProdEnv: env === 'production',
-  isTestEnv: env === 'test',
-  port: parseInt(getEnv('PORT') || '5000')
-};
-
-export default config;
+  logging?: ILogConfig;
+}
