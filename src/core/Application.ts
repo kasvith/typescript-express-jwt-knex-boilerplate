@@ -1,6 +1,7 @@
 import express, {
   Application as ExpressApplication,
-  RequestHandler
+  RequestHandler,
+  Router
 } from 'express';
 import { configureControllers } from './Controller';
 import { IProvider } from './interfaces/Provider';
@@ -8,7 +9,7 @@ import { ILogger } from './logging/Logger';
 import { UserController } from './UserController';
 import { WinstonLogFormat, WinstonLogger } from './WinstonLogger';
 
-class Application {
+abstract class Application {
   providers: IProvider[] = [];
   server: ExpressApplication;
   logger: ILogger;
@@ -39,6 +40,8 @@ class Application {
       provider.setup();
     }
   }
+
+  public abstract setupRoutes(router: Router): void;
 
   start(port: number): void {
     try {

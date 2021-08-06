@@ -9,6 +9,7 @@ import {
   ROUTER_SCOPE
 } from '@decorators/express/constants/meta';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function configureControllers(router: Router, controllers: any[]): void {
   controllers.forEach((controller) => {
     // This is our instantiated class
@@ -48,6 +49,7 @@ export function configureControllers(router: Router, controllers: any[]): void {
 
         paths = paths.map((path) => urljoin('/', path)).reverse();
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const params: any[] = [];
 
         if (route.middlewares) {
@@ -84,6 +86,7 @@ export function configureControllers(router: Router, controllers: any[]): void {
                 return res.send(response);
             }
           } catch (error) {
+            // pass error to error handler
             next(error);
           }
         };

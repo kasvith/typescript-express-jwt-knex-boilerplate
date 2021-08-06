@@ -11,8 +11,7 @@ interface User {
 }
 
 @ApiController('/users')
-@ApiVersion('1.0')
-@ApiVersion('2.0')
+@ApiVersion('v1')
 export class UserController {
   @Get('/all')
   async getAll(_req: Request, res: Response): Promise<MessageResponse> {
