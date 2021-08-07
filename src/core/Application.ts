@@ -3,11 +3,13 @@ import express, {
   RequestHandler,
   Router
 } from 'express';
-import { configureControllers } from './Controller';
+import { configureControllers } from './utils/Controller';
 import { IProvider } from './interfaces/Provider';
 import { ILogger } from './logging/Logger';
 import { UserController } from './UserController';
 import { WinstonLogFormat, WinstonLogger } from './WinstonLogger';
+import { Container } from 'inversify';
+import { IAppConfig } from '@config';
 
 abstract class Application {
   providers: IProvider[] = [];
@@ -41,7 +43,24 @@ abstract class Application {
     }
   }
 
+  /**
+   * Setup routes
+   *
+   * @abstract
+   * @param {Router} router
+   * @memberof Application
+   */
   public abstract setupRoutes(router: Router): void;
+
+  /**
+   *
+   *
+   * @abstract
+   * @param {IAppConfig} config
+   * @param {Container} container
+   * @memberof Application
+   */
+  public abstract setup(config: IAppConfig, container: Container): void;
 
   start(port: number): void {
     try {

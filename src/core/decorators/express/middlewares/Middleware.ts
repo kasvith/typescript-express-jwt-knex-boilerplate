@@ -1,6 +1,6 @@
-import { RouteConfig } from './common';
+import { RouteConfig } from '../common';
 import { RequestHandler } from 'express';
-import { ROUTER_ROUTES } from './constants/meta';
+import { ROUTER_ROUTES } from '../constants/meta';
 
 export const Middleware = (middleware: RequestHandler): MethodDecorator => {
   // `target` equals our class, `propertyKey` equals our decorated method name
