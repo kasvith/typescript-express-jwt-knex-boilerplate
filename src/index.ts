@@ -1,8 +1,10 @@
 import 'reflect-metadata';
+import dotenv from 'dotenv';
+dotenv.config();
 
-import Application from './core/Application';
 import config from './config/config';
-const app = new Application();
+import App from '@/App';
+const app = new App();
 
 app.start(config.port);
 

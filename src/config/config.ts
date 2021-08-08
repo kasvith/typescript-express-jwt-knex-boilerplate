@@ -1,8 +1,5 @@
-import dotenv from 'dotenv';
-
 import { getEnv } from '../core/utils/Environment';
 import { IAppConfig } from './AppConfig';
-dotenv.config();
 
 const env = getEnv('NODE_ENV') || 'production';
 

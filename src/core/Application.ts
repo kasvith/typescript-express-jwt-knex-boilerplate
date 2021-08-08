@@ -3,25 +3,20 @@ import express, {
   RequestHandler,
   Router
 } from 'express';
-import { configureControllers } from './utils/Controller';
 import { IProvider } from './interfaces/Provider';
-import { ILogger } from './logging/Logger';
-import { UserController } from './UserController';
-import { WinstonLogFormat, WinstonLogger } from './WinstonLogger';
 import { Container } from 'inversify';
 import { IAppConfig } from '@config';
+import config from '@/config/config';
+import container from '@di/container';
 
 abstract class Application {
   providers: IProvider[] = [];
   server: ExpressApplication;
-  logger: ILogger;
+  config: IAppConfig;
 
-  constructor() {
+  protected constructor() {
     this.server = express();
-    this.logger = new WinstonLogger({
-      format: WinstonLogFormat.Simple,
-      colorize: true
-    });
+    this.config = config;
   }
 
   registerProvider(provider: IProvider): void {
@@ -64,14 +59,20 @@ abstract class Application {
 
   start(port: number): void {
     try {
+      // start setup
+      this.setup(this.config, container);
+
+      console.log(container);
+
+      // initialize providers
       this.setupProviders();
-      const router = express.Router();
-      configureControllers(router, [UserController]);
+
+      // create and configure routes
+      const router = Router();
+      this.setupRoutes(router);
       this.server.use(router);
 
-      this.server.listen(port, async () => {
-        this.logger.info(`App is running on ${port}`);
-      });
+      this.server.listen(port, async () => {});
     } catch (error) {
       console.error(error);
       process.exit(-1);

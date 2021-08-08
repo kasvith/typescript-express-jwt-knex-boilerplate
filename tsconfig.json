@@ -46,6 +46,12 @@
       "@/*": [
         "./*"
       ],
+      "@di/*": [
+        "./core/di/*"
+      ],
+      "@core/*": [
+        "./core/*"
+      ],
       "@decorators/*": [
         "./core/decorators/*"
       ],

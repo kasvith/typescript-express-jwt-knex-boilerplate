@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { ServerResponse } from 'http';
 import urljoin from 'url-join';
 import { RouteConfig } from '@decorators/express/common';
+import container from '@di/container';
 import {
   ROUTER_API_VERSION,
   ROUTER_PREFIX,
@@ -10,10 +11,11 @@ import {
 } from '@decorators/express/constants/meta';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function configureControllers(router: Router, controllers: any[]): void {
+export function useControllers(router: Router, controllers: any[]): void {
   controllers.forEach((controller) => {
-    // This is our instantiated class
-    const instance = new controller();
+    // Resolve controller from inversify
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const instance: any = container.resolve(controller);
     // The prefix saved to our controller
     const scope = Reflect.getMetadata(ROUTER_SCOPE, controller);
     const prefix = Reflect.getMetadata(ROUTER_PREFIX, controller);
